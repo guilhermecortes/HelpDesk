@@ -1,0 +1,140 @@
+<% content_for :style do -%>
+    <%= stylesheet_link_tag "admin/select2" %> <!-- dropdown -->
+  <%= stylesheet_link_tag 'admin/jquery-ui-1.10.4.custom' %>
+<% end -%>
+
+<% content_for :script do -%>
+    <%= javascript_include_tag "admin/select2" %> <!-- dropdown -->
+    <%= javascript_include_tag "admin/select2_locale_pt-BR" %> <!-- dropdown -->
+	<%= javascript_include_tag 'jquery.validate.min' %> <!-- validação formulário -->
+	<%= javascript_include_tag 'admin/jquery.maskedinput' %> <!-- máscara campos -->
+
+    <script>
+        $('input[name="admin_customer[phone1]"]').mask("(99)9999-9999?9");
+        $('input[name="admin_customer[phone2]"]').mask("(99)9999-9999?9");
+
+        //Validação do formulário
+        $("form.formValidate").validate({
+            rules: {
+                'admin_customer[name]':
+                {
+                    required: true
+                },
+                'admin_customer[responsible]':
+                {
+                    required: true
+                },
+                'admin_customer[hours]':
+                {
+                    required: true,
+                    number: true
+                },
+                'admin_customer[phone1]':
+                {
+                    required: true
+                }
+            },
+            messages: {
+                'admin_customer[name]': {
+                    required: "O nome é obrigatório."
+                },
+                'admin_customer[responsible]': {
+                    required: "O nome do responsável é obrigatório."
+                },
+                'admin_customer[hours]': {
+                    required: "As horas contratadas é obrigatório.",
+                    number: "Insira um número"
+                },
+                'admin_customer[phone1]': {
+                    required: "O telefone é obrigatório."
+                }
+            }
+        });
+    </script>
+
+<% end -%>
+
+<div class="panel-body">
+  <% if flash[:alert] %>
+      <div class="alert alert-warning fade in fadeOut">
+        <button class="close close-sm" type="button" data-dismiss="alert">
+          <i class="fa fa-times"></i>
+        </button>
+        <%= flash[:alert] %>
+      </div>
+  <% end %>
+
+    <%= simple_form_for(@customer, html: {class: "form-horizontal formValidate"}) do |f| %>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Nome
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :name, :required => true, :autofocus => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Responsável
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :responsible, :required => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Ativo?
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.check_box :active, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Horas Contratadas
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :hours, :required => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Telefone 1
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :phone1, :required => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Telefone 2
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :phone2, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Endereço
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :address, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+		<%= link_to 'Voltar', {:action => "index"}, :class => 'btn btn-shadow btn-default' %>
+		<div class="pull-right">
+			<%= f.submit "Salvar", class: "btn btn-shadow btn-primary" %>
+		</div>
+	<% end %>
+
+</div>
+
+ <span class="loader">
+ <%= image_tag "admin/loading.gif", :width => "80px" %>
+</span>
+<div style="position:fixed;" class="maskLoader"></div>

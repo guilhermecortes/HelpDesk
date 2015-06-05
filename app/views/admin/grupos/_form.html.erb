@@ -1,0 +1,69 @@
+<% content_for :style do -%>
+    <%= stylesheet_link_tag "admin/select2" %> <!-- dropdown -->
+  <%= stylesheet_link_tag 'admin/jquery-ui-1.10.4.custom' %>
+<% end -%>
+
+<% content_for :script do -%>
+    <%= javascript_include_tag "admin/select2" %> <!-- dropdown -->
+    <%= javascript_include_tag "admin/select2_locale_pt-BR" %> <!-- dropdown -->
+	<%= javascript_include_tag 'jquery.validate.min' %>
+
+    <script>
+        //Validação do formulário
+        $("form.formValidate").validate({
+            rules: {
+                'admin_grupo[nome]':
+                {
+                    required: true
+                },
+                'admin_grupo[custo_total]':
+                {
+                    required: true
+                }
+            },
+            messages: {
+                'admin_grupo[nome]': {
+                    required: "O nome do grupo é obrigatório."
+                },
+                'admin_grupo[custo_total]': {
+                    required: "O custo total do grupo é obrigatório."
+                }
+            }
+        });
+    </script>
+
+<% end -%>
+
+<div class="panel-body">
+    <%= simple_form_for(@grupo, html: {class: "form-horizontal formValidate"}) do |f| %>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Nome
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :nome, :required => true, :autofocus => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Custo total do grupo
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :custo_total, :required => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+		<%= link_to 'Voltar', {:action => "index"}, :class => 'btn btn-shadow btn-default' %>
+		<div class="pull-right">
+			<%= f.submit "Salvar", class: "btn btn-shadow btn-primary" %>
+		</div>
+	<% end %>
+
+</div>
+
+ <span class="loader">
+ <%= image_tag "admin/loading.gif", :width => "80px" %>
+</span>
+<div style="position:fixed;" class="maskLoader"></div>

@@ -1,0 +1,15 @@
+.panel .nav .tab-disable a
+{
+	color: #b0aeae;
+    cursor: not-allowed;
+}
+
+.panel .nav .tab-disable a:hover
+{
+	color: #b0aeae;
+}
+
+.ui-widget
+{
+	z-index: 1000000;
+}

@@ -1,0 +1,131 @@
+<% content_for :script do -%>
+	<%= javascript_include_tag 'jquery.validate.min' %>
+<% end -%>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => "form-horizontal formValidate"}) do |f| %>
+  <%= devise_error_messages! %>
+
+  	<div class="form-group">
+  		<label class="control-label col-lg-2">Nome </label>
+  		<div class="col-lg-5 iconic-input right">
+  			<%#= f.text_field :nome, :required => true, :autofocus => true, :class => "form-control" %>
+  		</div>
+  		<br/>
+  	</div>
+
+  	<div class="form-group">
+  		<label class="control-label col-lg-2">Login </label>
+  		<div class="col-lg-5 iconic-input right">
+  			<div id="appendRespLogin"></div>
+  			<%#= f.text_field :login, :required => true, :class => "form-control" %>
+  		</div>
+  		<br/>
+  	</div>
+
+  	<div class="form-group">
+  		<label class="control-label col-lg-2">E-mail </label>
+  		<div class="col-lg-5">
+  			<%= f.text_field :email, :required => true, :class => "form-control" %>
+  		</div>
+  	</div>
+
+  	<div class="form-group">
+  		<label class="control-label col-lg-2">Senha </label>
+  		<div class="col-lg-5">
+  			<%= f.password_field :password, :required => true, :class => "form-control" %>
+  		</div>
+  	</div>
+
+  	<div class="form-group">
+  		<label class="control-label col-lg-2">Confirmar Senha </label>
+  		<div class="col-lg-5">
+  			<%= f.password_field :password_confirmation, :required => true, :class => "form-control" %>
+  		</div>
+  	</div>
+
+  <div><%= f.submit "Cadastrar", :class => "btn btn-info" %></div>
+<% end %>
+
+<script type="text/javascript">
+	
+//	var val_login;
+//	$('input[name="usuario[login]"]').blur(function (){
+//		$(this).addClass("spinner");
+//		val_login = $(this).val();
+//		// console.log(val_login);
+//		if(val_login != "")
+//			verificaLogin(val_login);
+//	});
+//
+//	function verificaLogin(login)
+//	{
+//		var input_login = $('input[name="usuario[login]"]');
+//		$.ajax({
+//			type: "GET",
+//			url: "/usuarios/login/"+login,
+//			dataType: "json",
+//			error: function(){
+//				  console.log("Erro ao enviar.");
+//				// return false;
+//			}
+//		}).done(function(data){
+//			// console.log(data);
+//			if(data.length == 0)
+//			{
+//				$(input_login).closest('div.form-group').removeClass('has-error');
+//				$(input_login).closest('div.form-group').addClass('has-success');
+//				$('#appendRespLogin').html('<i class="fa fa-check" style="color:#3C763D;margin-right:20px;"></i>');
+//			}
+//			else
+//			{
+//				$(input_login).closest('div.form-group').removeClass('has-success');
+//				$(input_login).closest('div.form-group').addClass('has-error');
+//				$('#appendRespLogin').html('<i class="fa fa-times" style="color:#A94442;margin-right:20px;"></i>');
+//			}
+//		}).always(function(){
+//			$(input_login).removeClass("spinner");
+//		});
+//	}
+
+	$(function (){
+    	
+    	//validação form
+        $(".formValidate").validate({
+        	rules: {
+//        		'user[nome]': 'required',
+//        		'user[login]': 'required',
+        		'user[email]': {
+                  required: true,
+                  email: true
+                },
+        		'user[password]': {
+                  required: true,
+                  minlength: 8
+                },
+                'user[password_confirmation]': {
+                  required: true,
+                  minlength: 8,
+                  equalTo: "#user_password"
+                }
+        	},
+        	messages: {
+//        		'user[nome]': "Por favor, insira um nome",
+//        		'user[login]': "Por favor, insira um login",
+        		'user[email]': {
+                  required: "Por favor, insira um e-mail",
+                  email: "Por favor, insira um e-mail válido"
+                },
+                'user[password]': {
+                    required: "Por favor, insira uma senha",
+                    minlength: "A senha deve ter no mínimo 8 caracteres"
+                },
+                'user[password_confirmation]': {
+                    required: "Por favor, insira uma senha",
+                    minlength: "A senha deve ter no mínimo 8 caracteres",
+                    equalTo: "Por favor, insira a mesma senha"
+                }
+        	}
+        });
+	});
+
+</script>

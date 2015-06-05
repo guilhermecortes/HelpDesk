@@ -1,0 +1,66 @@
+<%# <td class="center hidden-phone">5</td> - classe para centralizar e esconder qdo responsivo %>
+
+<table  class="display table table-bordered table-striped" id="data_table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th class="hidden-phone">Responsável</th>
+        <th class="hidden-phone">Ativo?</th>
+        <th class="hidden-phone">Horas Contrat.</th>
+        <% if can? :update, Admin::Customer %>
+            <th>Editar</th>
+        <% end %>
+        <% if can? :destroy, Admin::Customer %>
+            <th>Excluir</th>
+        <% end %>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% @customers.each do |customer| %>
+        <tr>
+            <td><%= customer.name %></td>
+            <td class="hidden-phone"><%= customer.responsible %></td>
+            <td class="hidden-phone"><%= customer.active? ? "Sim" : "Não" %></td>
+            <td class="hidden-phone"><%= customer.hours %></td>
+            <% if can? :update, Admin::Customer %>
+                <td class="center">
+                    <%= link_to(edit_admin_customer_path(customer), :class => 'btn btn-primary btn-xs') do %>
+                        <i class="fa fa-pencil fa-lg"></i>
+                    <% end %>
+                </td>
+            <% end %>
+            <% if can? :destroy, Admin::Customer %>
+                <td class="center">
+                    <%= link_to(admin_customer_path(customer), :class => 'btn btn-danger btn-xs btn-excluir-grid', :id => customer.id) do %>
+                        <i class="fa fa-trash-o fa-lg"></i>
+                    <% end %>
+                </td>
+            <% end %>
+        </tr>
+    <% end %>
+
+    </tbody>
+
+</table>
+
+<span class="loader" style="left:50%;">
+    <%= image_tag "admin/loading.gif", :width => "80px" %>
+</span>
+<div style="position:fixed;" class="maskLoader"></div>
+
+<script type="text/javascript">
+    $(function (){
+        //datatable
+        $('#data_table').dataTable( {
+            "aaSorting": [[ 0, "asc" ]],
+            "oLanguage": {
+                "sUrl": "/datatable_pt.txt"
+            },
+            "aoColumnDefs": [
+                { "bSortable": true, "aTargets": [ 0 ] },
+                { "bSearchable": false, "aTargets": [ 2, 3 ] }
+            ]
+        } );
+    });
+</script>

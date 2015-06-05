@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HelpDesk</title>
+  <%= csrf_meta_tags %>
+
+  <%= favicon_link_tag 'favicon.ico' %>
+
+  <!-- Bootstrap core CSS -->
+  <%= stylesheet_link_tag "admin/bootstrap.min" %>
+  <%= stylesheet_link_tag "admin/bootstrap-reset" %>
+
+  <!--external css-->
+  <%= stylesheet_link_tag "admin/font-awesome/css/font-awesome" %>
+
+  <!-- Custom styles for this template -->
+  <%= stylesheet_link_tag "admin/style" %>
+  <%= stylesheet_link_tag "admin/style-responsive" %>
+  <%= stylesheet_link_tag "admin/style-backend" %>
+
+  <%= yield :style %>
+  <%= javascript_include_tag "admin/jquery" %>
+  <%#= javascript_include_tag "application" %>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+  <!--[if lt IE 9]>
+    <%= javascript_include_tag "admin/html5shiv" %>
+    <%= javascript_include_tag "admin/respond" %>
+  <![endif]-->
+
+</head>
+<body>
+<section id="container" class="">
+  <!--header inicio-->
+  <header class="header white-bg">
+    <div class="sidebar-toggle-box">
+      <div data-original-title="Menu Toggle" data-placement="right" class="fa fa-bars tooltips"></div>
+    </div>
+    <!--logo inicio-->
+    <a href="index.html" class="logo" >Help<span> Desk</span></a>
+    <!--logo fim-->
+    <div class="nav notify-row" id="top_menu">
+      <!--  notification start -->
+      <ul class="nav top-menu">
+
+        <!-- Notificação de mensagem início -->
+        <li id="header_inbox_bar" class="dropdown">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <i class="fa fa-envelope-o"></i>
+            <span class="badge bg-important">2</span>
+          </a>
+          <ul class="dropdown-menu extended inbox">
+            <div class="notify-arrow notify-arrow-red"></div>
+            <li>
+              <p class="red">Você tem 2 novas mensagens</p>
+            </li>
+            <li>
+              <a href="#">
+                <span class="photo"><%= image_tag("avatar-mini.jpg") %></span>
+                                    <span class="subject">
+                                    <span class="from">Jonathan Smith</span>
+                                    <span class="time">Just now</span>
+                                    </span>
+                                    <span class="message">
+                                        Hello, this is an example msg.
+                                    </span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="photo"><%= image_tag("avatar-mini2.jpg") %></span>
+                                    <span class="subject">
+                                    <span class="from">Jhon Doe</span>
+                                    <span class="time">10 mins</span>
+                                    </span>
+                                    <span class="message">
+                                     Hi, Jhon Doe Bhai how are you ?
+                                    </span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#">Ver todas as mensagens</a>
+            </li>
+          </ul>
+        </li>
+        <!-- Notificação de mensagem fim -->
+
+        <!-- Notificação de aleta início -->
+        <li id="header_notification_bar" class="dropdown">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+            <i class="fa fa-bell-o"></i>
+            <span class="badge bg-warning">7</span>
+          </a>
+          <ul class="dropdown-menu extended notification">
+            <div class="notify-arrow notify-arrow-yellow"></div>
+            <li>
+              <p class="yellow">Você tem 3 novas notificações</p>
+            </li>
+            <li>
+              <a href="#">
+                <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                Server #3 overloaded.
+                <span class="small italic">34 mins</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="label label-warning"><i class="fa fa-bell"></i></span>
+                Server #10 not respoding.
+                <span class="small italic">1 Hours</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                Database overloaded 24%.
+                <span class="small italic">4 hrs</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">Ver todas as notificações</a>
+            </li>
+          </ul>
+        </li>
+        <!-- Notificação de aleta fim -->
+      </ul>
+    </div>
+
+    <div class="top-nav ">
+      <ul class="nav pull-right top-menu">
+        <%#<li>
+                  <input type="text" class="form-control search" placeholder="Search">
+              </li>%>
+        <!-- Dropdown acesso usuário início -->
+        <li class="dropdown">
+          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+            <%= image_tag('admin/sem_imagem.jpg', size: "25x29") %>
+            <span class="username">Usuário</span>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu extended logout">
+            <div class="log-arrow-up"></div>
+            <li><a href="#"><i class=" fa fa-suitcase"></i>Minha Conta</a></li>
+            <li><a href="#"><i class="fa fa-cog"></i> Configurações</a></li>
+            <li>
+              <%= link_to(destroy_user_session_url) do %>
+                  <i class="fa fa-key"></i> Sair
+              <% end %>
+            </li>
+          </ul>
+        </li>
+        <!-- Dropdown acesso usuário fim -->
+      </ul>
+    </div>
+  </header>
+  <!--header fim-->
+
+  <!-- Menu lateral início -->
+  <aside>
+    <div id="sidebar"  class="nav-collapse ">
+      <!-- sidebar menu start-->
+      <ul class="sidebar-menu" id="nav-accordion">
+        <%#<li class="sub-menu">
+                      <a href="/admin/produtos" >
+                          <i class="fa fa-shopping-cart"></i>
+                          <span>Produtos</span>
+                      </a>
+                  </li>%>
+        <li class="sub-menu">
+          <%= link_to admin_usuarios_path do %>
+            <i class="fa fa-users"></i>
+            <span>Usuários</span>
+          <%- end -%>
+        </li>
+        <li class="sub-menu">
+          <%= link_to admin_grupos_path do %>
+              <i class="fa fa-user"></i>
+              <span>Grupos</span>
+          <% end %>
+        </li>
+        <li class="sub-menu">
+          <%= link_to admin_categories_path do %>
+            <i class="fa fa-bars"></i>
+            <span>Categorias</span>
+          <%- end -%>
+        </li>
+        <li class="sub-menu">
+          <%= link_to admin_customers_path do %>
+            <i class="fa fa-bars"></i>
+            <span>Clientes</span>
+          <%- end -%>
+        </li>
+        <li class="sub-menu">
+          <%= link_to admin_employees_path do %>
+            <i class="fa fa-bars"></i>
+            <span>Funcionários</span>
+          <%- end -%>
+        </li>
+        <li class="sub-menu">
+          <%= link_to admin_work_types_path do %>
+            <i class="fa fa-bars"></i>
+            <span>Tipos de Trabalho</span>
+          <%- end -%>
+        </li>
+        <!--<li class="sub-menu">-->
+          <!--<a href="/admin/relatorios" >-->
+            <!--<i class="fa fa-bar-chart-o"></i>-->
+            <!--<span>Relatórios</span>-->
+          <!--</a>-->
+        <!--</li>-->
+      </ul>
+      <!-- sidebar menu end-->
+    </div>
+  </aside>
+  <!-- Menu lateral fim -->
+
+  <!-- Conteúdo principal início -->
+  <section id="main-content">
+    <section class="wrapper">
+
+      <%= yield %>
+
+    </section>
+  </section>
+  <!-- Conteúdo principal fim -->
+
+  <!-- Rodapé inicio -->
+  <footer class="site-footer">
+    <div class="text-center">
+      2015 &copy; Guilherme Côrtes
+      <a href="#" class="go-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+    </div>
+  </footer>
+  <!-- Rodapé fim -->
+</section>
+
+<%= javascript_include_tag "admin/bootstrap.min" %>
+<%= javascript_include_tag "admin/jquery.dcjqaccordion.2.7" %>
+<%= javascript_include_tag "admin/jquery.scrollTo.min" %>
+<%= javascript_include_tag "admin/jquery.nicescroll" %>
+<%= javascript_include_tag "admin/respond.min" %>
+<%= javascript_include_tag "admin/common-scripts" %>
+
+<%= yield :script %>
+
+<script type="text/javascript">
+    $(function (){
+        //desaparecer mensagem de erro, sucesso e alerta após 5s
+        setTimeout(function() {
+            $("span.msgSucesso, span.msgErro, span.msgAlerta, div.fadeOut").fadeOut("slow");
+        }, 5000);
+    });
+</script>
+
+</body>
+</html>

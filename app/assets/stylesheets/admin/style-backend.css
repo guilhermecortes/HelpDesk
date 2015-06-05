@@ -1,0 +1,149 @@
+label.error
+{
+	color: #b94a48 !important;
+}
+
+span.msgSucesso, span.msgAlerta, span.msgErro
+{
+	background: url(/assets/admin/msg_sucesso.png) no-repeat scroll 15px 10px #f2fff7;
+    border: 1px solid #72987b;
+    border-radius: 3px;
+    color: #135830;
+    display: block;
+    font: 14px 'open sans';
+    margin: 0 auto;
+    padding: 15px 40px 15px 55px;
+    text-align: left;
+    width: 310px;
+}
+
+span.msgAlerta
+{
+	background-color: #ffffe1;
+    background-image: url("/assets/admin/msg_alerta.png");
+    border-color: #707029;
+    color: #4f4f31;
+}
+
+span.msgErro
+{
+	background-color: #fff1ef;
+    background-image: url("/assets/admin/msg_erro.png");
+    background-position: 15px 13px;
+    border-color: #9c3c2e;
+    color: #66322a;
+}
+
+.maskLoader,
+.maskLoader_msg
+{
+    background-color: #ffffff;
+    display: none;
+    height: 100%;
+    left: 0;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100000;
+    filter: alpha(opacity=80);
+    -ms-filter: "alpha(opacity=80)";
+}
+
+span.loader,
+span.loader_msg
+{
+    display: none;
+    float: left;
+    height: 90px;
+    left: 45%;
+    position: absolute;
+    top: 40%;
+    width: 90px;
+    z-index: 100;
+}
+
+/*thumbnail imagem */
+
+.thumbnail
+{
+    display: inline-block;
+    height: auto;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.thumbnail img
+{
+    max-width: 100%;
+}
+
+.thumbnail .descricao
+{
+    background-color: rgba(0, 0, 0, 0.8);
+    bottom: -100%;
+    color: #fff;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+.thumbnail .descricao .excluirImagem
+{
+    bottom: 5px;
+    position: absolute;
+    right: 5px;
+}
+
+/*thumbnail imagem */
+
+/*autocomplete*/
+
+.ui-corner-all 
+{
+    border-radius: 0 !important;
+}
+
+.ui-menu .ui-menu-item a
+{
+    padding: 7px 0.4em !important;
+}
+
+.ui-widget-content
+{
+    background-color: #f7f7f7 !important;
+    border: 1px solid #e6e6e6 !important;
+}
+
+.ui-autocomplete {
+    max-height: 130px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+/*autocomplete*/
+
+/*linha tabela erro - preços*/
+
+tr.erroValidacaoPreco
+{
+    background-color: #f2dede;
+    border: 1px solid #a94442 !important;
+}
+
+/*linha tabela erro - preços*/
+
+.error-input
+{
+    border-color: #b94a48 !important;
+}
+
+.semRegistroChart
+{
+    float: left;
+    font-size: 18px;
+    margin-top: 40px;
+    text-align: center;
+    width: 100%;
+}

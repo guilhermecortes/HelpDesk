@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <!-- <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina"> -->
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>Help Desk Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <%= stylesheet_link_tag "admin/bootstrap.min" %>
+    <%= stylesheet_link_tag "admin/bootstrap-reset" %>
+    <!--external css-->
+    <%= stylesheet_link_tag "admin/font-awesome/css/font-awesome" %>
+    <!-- Custom styles for this template -->
+    <%= stylesheet_link_tag "admin/style" %>
+    <%= stylesheet_link_tag "admin/style-responsive" %>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <%= javascript_include_tag "admin/html5shiv" %>
+    <%= javascript_include_tag "admin/respond" %>
+    <![endif]-->
+    <%= javascript_include_tag "jquery-1.9.1.min" %>
+    <%= javascript_include_tag "admin/bootstrap.min" %>
+</head>
+
+  <body class="login-body">
+
+    <div class="container">
+
+  
+
+
+		<%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "form-signin"}) do |f| %>
+      <!-- <form class="form-signin" action="index.html"> -->
+        <h2 class="form-signin-heading">Faça login</h2>
+        <div class="login-wrap">
+          <%= content_tag(:div, flash[:notice], :id => "flash_notice", :class => "alert alert-warning fade in") if flash[:notice] %>
+          <%= content_tag(:div, flash[:alert], :id => "flash_alert", :class => "alert alert-warning fade in") if flash[:alert] %>
+            <!-- <input type="text" class="form-control" placeholder="User ID" autofocus> -->
+            <%= f.text_field :email, autofocus: true, :class => 'form-control', :placeholder => "E-mail" %>
+            <!-- <input type="password" class="form-control" placeholder="Password"> -->
+            <%= f.password_field :password, autocomplete: "off", :class => "form-control", :placeholder => "Senha" %>
+            <label class="checkbox">
+                <span class="pull-right">
+                    <a data-toggle="modal" href="#myModal"> Esqueceu a senha?</a>
+                </span>
+            </label>
+            <button class="btn btn-lg btn-login btn-block" type="submit">Entrar</button>
+            <%#<p>Ou você pode se conectar através de sua rede social</p>
+            <div class="login-social-link">
+                <a href="index.html" class="facebook">
+                    <i class="fa fa-facebook"></i>
+                    Facebook
+                </a>
+                <a href="index.html" class="twitter">
+                    <i class="fa fa-twitter"></i>
+                    Twitter
+                </a>
+            </div>
+            <div class="registration">
+                Ainda não possui conta?
+                <a class="" href="/usuarios/sign_up">
+                    Crie uma conta
+                </a>
+            </div>%>
+
+        </div>
+
+      <!-- </form> -->
+		<% end %>
+
+      <!-- Modal -->
+      <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+                <%= f.error_notification %>
+
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">Esqueceu a senha?</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Insira seu endereço de e-mail abaixo para receber instruções de como alterar sua senha.</p>
+                  <%= f.input :email, input_html: {class: 'form-control placeholder-no-fix'}, required: false, :placeholder => 'E-mail', :label => false %>
+
+                </div>
+                <div class="modal-footer">
+                  <button data-dismiss="modal" class="btn btn-default" type="button">Cancelar</button>
+                  <%= f.button :submit, "Enviar instruções para redefinir senha", :class => "btn btn-success" %>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <!-- modal -->
+
+    </div>
+<br/>
+<br/>
+
+
+
+
+  </body>
+</html>

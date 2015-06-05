@@ -1,0 +1,128 @@
+<% content_for :style do -%>
+    <%= stylesheet_link_tag "admin/select2" %> <!-- dropdown -->
+  <%= stylesheet_link_tag 'admin/jquery-ui-1.10.4.custom' %>
+<% end -%>
+
+<% content_for :script do -%>
+    <%= javascript_include_tag "admin/select2" %> <!-- dropdown -->
+    <%= javascript_include_tag "admin/select2_locale_pt-BR" %> <!-- dropdown -->
+	<%= javascript_include_tag 'jquery.validate.min' %> <!-- validação formulário -->
+
+    <script>
+
+        //Validação do formulário
+        $("form.formValidate").validate({
+            rules: {
+                'admin_employee[name]':
+                {
+                    required: true
+                },
+                'admin_employee[registration]':
+                {
+                    required: true
+                },
+                'admin_employee[post]':
+                {
+                    required: true
+                },
+                'admin_employee[salary]':
+                {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: {
+                'admin_employee[name]':{
+                    required: "O nome é obrigatório."
+                },
+                'admin_employee[registration]':{
+                    required: "A matrícula é obrigatória."
+                },
+                'admin_employee[post]':{
+                    required: "O cargo é obrigatório."
+                },
+                'admin_employee[salary]':{
+                    required: "O salário é obrigatório.",
+                    number: "Insira um número"
+                }
+            }
+        });
+
+        $(function (){
+            console.log("opa")
+            $('.select2').select2();
+        });
+
+    </script>
+
+<% end -%>
+
+<div class="panel-body">
+  <% if flash[:alert] %>
+      <div class="alert alert-warning fade in fadeOut">
+        <button class="close close-sm" type="button" data-dismiss="alert">
+          <i class="fa fa-times"></i>
+        </button>
+        <%= flash[:alert] %>
+      </div>
+  <% end %>
+
+    <%= simple_form_for(@employee, html: {class: "form-horizontal formValidate"}) do |f| %>
+        <%= f.hidden_field :roles_mask, :value => 2 -%>
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Nome
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :name, :required => true, :autofocus => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Matrícula
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :registration, :required => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Grupo
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.select :admin_grupo_id, Admin::Grupo.all.collect {|g| [g.nome, g.id]}, {include_blank: false}, :class => "select2", :style => "width:100%" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Cargo
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :post, :required => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Salário
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :salary, :required => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+		<%= link_to 'Voltar', {:action => "index"}, :class => 'btn btn-shadow btn-default' %>
+		<div class="pull-right">
+			<%= f.submit "Salvar", class: "btn btn-shadow btn-primary" %>
+		</div>
+	<% end %>
+
+</div>
+
+ <span class="loader">
+ <%= image_tag "admin/loading.gif", :width => "80px" %>
+</span>
+<div style="position:fixed;" class="maskLoader"></div>

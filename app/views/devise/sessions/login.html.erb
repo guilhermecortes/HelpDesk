@@ -1,0 +1,128 @@
+<% content_for :style do -%>
+
+<% end -%>
+
+<% content_for :script do -%>
+	
+	<%= javascript_include_tag "website/tema/jquery.fancybox" %>
+	<%= javascript_include_tag "jquery.validate.min" %>
+
+	<script type="text/javascript">
+
+		(function($) {
+		    // $ sign here is a parameter, which is set to jQuery 
+
+		    $(function() {
+		        $('body').removeClass('cms-index-index cms-home').addClass('contacts-index-index');
+
+	            $("form.form-signin-web").validate({
+	                submitHandler: function(form) { //dispara loader qdo form ok
+	                    $('div.maskLoader').show();
+	                    $('span.loader').show();
+	                    form.submit();
+	                },
+	                rules: {
+	                    'user[email]':
+	                    {
+	                        required: true,
+	                        email: true
+	                    },
+	                    'user[password]':
+	                    {
+	                        required: true
+	                    }
+	                },
+	                messages: {
+	                    'user[email]': {
+	                        required: "O e-mail é obrigatório.",
+	                        email: "Por favor, insira um e-mail válido"
+	                    },
+	                    'user[password]': {
+	                        required: "A senha é obrigatória."
+	                    }
+	                }
+	            });
+
+		    });
+		})(jQuery);
+
+	</script>
+
+<% end -%>
+
+
+    <div class ="row">
+       <!-- global notices -->
+       <noscript>
+          <div class="global-site-notice noscript">
+                <div class="notice-inner">
+                    <p>
+                        <strong>JavaScript está desabilitado no seu navegador.</strong>
+                        <br /> Você precisa do JavaScript habilitado no seu navegador para utilizar as funcionalidades deste website. 
+                    </p>
+                </div>
+          </div>
+       </noscript>
+       <!-- global messages -->
+		<div class="account-login">
+		    <div class="page-title">
+		        <h1>Logue ou crie uma conta</h1>
+		    </div>
+
+	        <%= form_for(resource, as: resource_name, url: '/login', :html => {:class => "form-signin-web"}) do |f| %>
+		        <div class="col2-set">
+		            <div class="col-1 new-users">
+		                <div class="content">
+		                    <h2>Usuário novo</h2>
+		                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi molestie tellus id nunc ultrices tincidunt. Nunc finibus sit amet sapien eu malesuada. Integer neque odio, vestibulum id dictum at, faucibus a metus. </p>
+		                    <p>Mauris non ante libero. Sed aliquam consectetur efficitur. Nam iaculis viverra risus, a sagittis lorem efficitur a. Nunc dui justo, fermentum nec molestie a, mollis vel diam. Curabitur viverra, nibh vitae consectetur consectetur, tortor massa molestie risus, quis pharetra sem nibh quis eros. </p>
+		                </div>
+		            </div>
+		            <div class="col-2 registered-users">
+		                <div class="content">
+		                    <h2>Usuário registrado</h2>
+          					<%= content_tag(:div, flash[:alert], :id => "flash_alert", :class => "alert alert-warning fade in") if flash[:alert] %>
+		                    <ul class="form-list">
+		                        <li class="col-lg-8">
+		                            <label class="required" for="email">E-mail<em>*</em></label>
+		                            <div class="input-box">
+		                            	<%= f.text_field :email, autofocus: true, :class => 'input-text', :required => true, :style => 'max-width:330px; width:100%' %>
+		                            </div>
+		                        </li>
+		                        <li class="col-lg-8">
+		                            <label class="required" for="pass">Senha<em>*</em></label>
+		                            <div class="input-box">
+		                            	<%= f.password_field :password, autocomplete: "off", :class => "input-text", :required => true, :style => 'max-width:330px; width:100%' %>
+		                            </div>
+		                        </li>
+		                    </ul>
+		                    
+		                </div>
+		            </div>
+		        </div>
+		        <div class="col2-set">
+		            <div class="col-1 new-users">
+		                <div class="buttons-set">
+		                	<%= link_to "Criar conta", '/nova-conta', :class => 'button' %>
+		                </div>
+		            </div>
+		            <div class="col-2 registered-users">
+		                <div class="buttons-set">
+		                    <!-- <a data-toggle="modal" href="#myModal" class="f-left" href="#">Esqueceu a senha?</a> -->
+		                    <!-- <button class="button" type="submit">Fazer login</button> -->
+		                    <%= f.submit "Fazer login", :class => "button" %>
+		                </div>
+		            </div>
+		        </div>
+	        <% end %>
+
+		</div>
+
+
+
+    </div>
+
+<span class="loader" style="left:40%;">
+    <%= image_tag "admin/loading.gif", :width => "80px" %>
+</span>
+<div style="position:fixed;" class="maskLoader"></div>

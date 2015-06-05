@@ -1,0 +1,107 @@
+<% content_for :style do -%>
+    <%= stylesheet_link_tag "admin/select2" %> <!-- dropdown -->
+  <%= stylesheet_link_tag 'admin/jquery-ui-1.10.4.custom' %>
+<% end -%>
+
+<% content_for :script do -%>
+    <%= javascript_include_tag "admin/select2" %> <!-- dropdown -->
+    <%= javascript_include_tag "admin/select2_locale_pt-BR" %> <!-- dropdown -->
+	<%= javascript_include_tag 'jquery.validate.min' %>
+
+    <script>
+        //Validação do formulário
+        $("form.formValidate").validate({
+            rules: {
+                'user[nome]':
+                {
+                    required: true
+                },
+                'user[email]':
+                {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                'user[nome]': {
+                    required: "O nome do usuário é obrigatório."
+                },
+                'user[email]': {
+                    required: "O e-mail é obrigatório.",
+                    email: "Insira um e-mail válido"
+                }
+            }
+        });
+    </script>
+
+<% end -%>
+
+<div class="panel-body">
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "form-horizontal formValidate"}) do |f| %>
+      <%= f.hidden_field :id %>
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Nome
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :nome, :required => true, :autofocus => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">E-mail
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.text_field :email, :required => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+      <div class="form-group">
+        <label class="control-label col-lg-2">Status
+        </label>
+        <div class="col-lg-4 iconic-input right">
+          <%= f.select(:ativo, [['Ativo', 1],
+          ['Inativo', 0]], {}, { :class => 'form-control', :style => 'float: left; max-width: 85%;' } )%>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-lg-2">Tipo de Usuário
+        </label>
+        <div class="col-lg-4 iconic-input right">
+          <%= f.select(:roles_mask, [['Admin', 1],
+                                    ['Funcionário', 2],
+                                    ['Cliente', 4]],
+                                    {}, { :class => 'form-control', :style => 'float: left; max-width: 85%;' } )%>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-lg-2">Nova Senha
+        </label>
+        <div class="col-lg-4 iconic-input right">
+          <%= f.password_field :password, :class => "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-lg-2">Confirmação de Senha
+        </label>
+        <div class="col-lg-4 iconic-input right">
+          <%= f.password_field :password_confirmation, :class => "form-control" %>
+        </div>
+      </div>
+
+		<%= link_to 'Voltar', {:action => "index"}, :class => 'btn btn-shadow btn-default' %>
+		<div class="pull-right">
+			<%= f.submit "Salvar", class: "btn btn-shadow btn-primary" %>
+		</div>
+	<% end %>
+
+</div>
+
+ <span class="loader">
+ <%= image_tag "admin/loading.gif", :width => "80px" %>
+</span>
+<div style="position:fixed;" class="maskLoader"></div>

@@ -1,0 +1,76 @@
+<% content_for :style do -%>
+    <%= stylesheet_link_tag "admin/demo_page" %> <!-- datatable -->
+    <%= stylesheet_link_tag "admin/demo_table" %> <!-- datatable -->
+    <%= stylesheet_link_tag "admin/DT_bootstrap" %> <!-- datatable -->
+<% end -%>
+
+<% content_for :script do -%>
+    <%= javascript_include_tag 'admin/jquery.dataTables' %> <!-- datatable -->
+    <%= javascript_include_tag "admin/DT_bootstrap" %> <!-- datatable -->
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+
+            $(document).on('click','a.btn-excluir-grid',function () {
+                if(confirm("Você tem certeza que deseja excluir?"))
+                {
+                    $('span.loader').show();
+                    $('div.maskLoader').show();
+                    var linha = $(this).closest('tr');
+                    id = $(this).attr('id');
+                    $.ajax({
+                        url: '/admin/grupos/delete/'+id,
+                        type: 'POST',
+                        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                        // data: {id: id},
+                    })
+                    .done(function() {
+                        // $(linha).remove();
+                        $.get(this.href, $(this).serialize(), null, 'script');
+                    })
+                    .fail(function() {
+                        console.log("erro ao excluir");
+                        $('span.loader').hide();
+                        $('div.maskLoader').hide();
+                    });
+                    $.ajaxSetup({
+                      headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                      }
+                    });
+                }
+                return false;
+            });
+
+        } );
+    </script>
+
+<% end -%>
+
+<section class="panel">
+    <header class="panel-heading">
+        Lista de Grupos
+    </header>
+
+  <% if flash[:info] %>
+      <div class="alert alert-success fade in fadeOut">
+        <button class="close close-sm" type="button" data-dismiss="alert">
+          <i class="fa fa-times"></i>
+        </button>
+        <%= flash[:info] %>
+      </div>
+  <% end %>
+
+    <div class="panel-body">
+        <div class="btn-group">
+            <% if can? :create, Admin::Grupo %>
+                <%= link_to(new_admin_grupo_path, :class => 'btn btn-shadow btn-primary', :style => 'margin-bottom:10px;') do %>
+                    Adicionar <i class="fa fa-plus"></i>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="adv-table">
+            <%= render 'grid' %>
+        </div>
+    </div>
+</section>

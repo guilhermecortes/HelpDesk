@@ -1,0 +1,62 @@
+<%# <td class="center hidden-phone">5</td> - classe para centralizar e esconder qdo responsivo %>
+
+<table  class="display table table-bordered table-striped" id="data_table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th class="hidden-phone">Tickets Relacionados</th>
+        <% if can? :update, Admin::WorkType %>
+            <th>Editar</th>
+        <% end %>
+        <% if can? :destroy, Admin::WorkType %>
+            <th>Excluir</th>
+        <% end %>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% @work_types.each do |work_type| %>
+        <tr>
+            <td><%= work_type.name %></td>
+            <td class="hidden-phone"><%= "--" %></td>
+            <% if can? :update, Admin::WorkType %>
+                <td class="center">
+                    <%= link_to(edit_admin_work_type_path(work_type), :class => 'btn btn-primary btn-xs') do %>
+                        <i class="fa fa-pencil fa-lg"></i>
+                    <% end %>
+                </td>
+            <% end %>
+            <% if can? :destroy, Admin::WorkType %>
+                <td class="center">
+                    <%= link_to(admin_work_type_path(work_type), :class => 'btn btn-danger btn-xs btn-excluir-grid', :id => work_type.id) do %>
+                        <i class="fa fa-trash-o fa-lg"></i>
+                    <% end %>
+                </td>
+            <% end %>
+        </tr>
+    <% end %>
+
+    </tbody>
+
+</table>
+
+<span class="loader" style="left:50%;">
+    <%= image_tag "admin/loading.gif", :width => "80px" %>
+</span>
+<div style="position:fixed;" class="maskLoader"></div>
+
+<script type="text/javascript">
+    $(function (){
+        //datatable
+        $('#data_table').dataTable( {
+            "aaSorting": [[ 0, "asc" ]],
+            "oLanguage": {
+                "sUrl": "/datatable_pt.txt"
+            },
+            "aoColumnDefs": [
+                { "bSortable": true, "aTargets": [ 0 ] },
+                { "bSearchable": false, "aTargets": [ 2, 3 ] }
+            ]
+        } );
+    });
+</script>

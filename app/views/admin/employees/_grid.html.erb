@@ -1,0 +1,68 @@
+<%# <td class="center hidden-phone">5</td> - classe para centralizar e esconder qdo responsivo %>
+
+<table  class="display table table-bordered table-striped" id="data_table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th class="hidden-phone">Matrícula</th>
+        <th class="hidden-phone">Grupo</th>
+        <th class="hidden-phone">Cargo</th>
+        <th class="hidden-phone">Salário</th>
+        <% if can? :update, Admin::Employee %>
+            <th>Editar</th>
+        <% end %>
+        <% if can? :destroy, Admin::Employee %>
+            <th>Excluir</th>
+        <% end %>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% @employees.each do |employee| %>
+        <tr>
+            <td><%= employee.name %></td>
+            <td class="hidden-phone"><%= employee.registration %></td>
+            <td class="hidden-phone"><%= employee.admin_grupo.nome %></td>
+            <td class="hidden-phone"><%= employee.post %></td>
+            <td class="hidden-phone"><%= employee.salary %></td>
+            <% if can? :update, Admin::Employee %>
+                <td class="center">
+                    <%= link_to(edit_admin_employee_path(employee), :class => 'btn btn-primary btn-xs') do %>
+                        <i class="fa fa-pencil fa-lg"></i>
+                    <% end %>
+                </td>
+            <% end %>
+            <% if can? :destroy, Admin::Employee %>
+                <td class="center">
+                    <%= link_to(admin_employee_path(employee), :class => 'btn btn-danger btn-xs btn-excluir-grid', :id => employee.id) do %>
+                        <i class="fa fa-trash-o fa-lg"></i>
+                    <% end %>
+                </td>
+            <% end %>
+        </tr>
+    <% end %>
+
+    </tbody>
+
+</table>
+
+<span class="loader" style="left:50%;">
+    <%= image_tag "admin/loading.gif", :width => "80px" %>
+</span>
+<div style="position:fixed;" class="maskLoader"></div>
+
+<script type="text/javascript">
+    $(function (){
+        //datatable
+        $('#data_table').dataTable( {
+            "aaSorting": [[ 0, "asc" ]],
+            "oLanguage": {
+                "sUrl": "/datatable_pt.txt"
+            },
+            "aoColumnDefs": [
+                { "bSortable": true, "aTargets": [ 0 ] },
+                { "bSearchable": false, "aTargets": [ 2, 3 ] }
+            ]
+        } );
+    });
+</script>

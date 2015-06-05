@@ -1,0 +1,88 @@
+<% content_for :style do -%>
+    <%= stylesheet_link_tag "admin/demo_page" %> <!-- datatable -->
+    <%= stylesheet_link_tag "admin/demo_table" %> <!-- datatable -->
+    <%= stylesheet_link_tag "admin/DT_bootstrap" %> <!-- datatable -->
+<% end -%>
+
+<% content_for :script do -%>
+    <%= javascript_include_tag 'admin/jquery.dataTables' %> <!-- datatable -->
+    <%= javascript_include_tag "admin/DT_bootstrap" %> <!-- datatable -->
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+
+            $(document).on('click','a.btn-excluir-grid',function () {
+                if(confirm("Você tem certeza que deseja excluir?"))
+                {
+                    $('span.loader').show();
+                    $('div.maskLoader').show();
+                    var linha = $(this).closest('tr');
+                    id = $(this).attr('id');
+                    $.ajax({
+                        url: '/admin/usuarios/delete/'+id,
+                        type: 'POST',
+                        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                        // data: {id: id},
+                    })
+                    .done(function() {
+                        // $(linha).remove();
+                        $.get(this.href, $(this).serialize(), null, 'script');
+                    })
+                    .fail(function() {
+                        console.log("erro ao excluir usuário");
+                        $('span.loader').hide();
+                        $('div.maskLoader').hide();
+                    });
+                    $.ajaxSetup({
+                      headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                      }
+                    });
+                }
+                return false;
+            });
+
+        } );
+    </script>
+
+<% end -%>
+
+<section class="panel">
+    <header class="panel-heading">
+        Lista de Usuários
+    </header>
+    <%= if flash[:estado] == "Inserido-sucesso"
+        raw('<div class="alert alert-success fade in fadeOut">
+                <button class="close close-sm" type="button" data-dismiss="alert">
+                    <i class="fa fa-times"></i>
+                </button>
+                <strong>Usuário</strong> incluído com sucesso.
+            </div>')
+        elsif flash[:estado] == "Atualizado-sucesso"
+        raw('<div class="alert alert-success fade in fadeOut">
+                <button class="close close-sm" type="button" data-dismiss="alert">
+                    <i class="fa fa-times"></i>
+                </button>
+                <strong>Usuário</strong> atualizado com sucesso.
+            </div>')
+        elsif flash[:estado] == "Excluído-sucesso"
+        raw('<div class="alert alert-success fade in fadeOut">
+                <button class="close close-sm" type="button" data-dismiss="alert">
+                    <i class="fa fa-times"></i>
+                </button>
+                <strong>Usuário</strong> excluído com sucesso.
+            </div>')
+    end %>
+    <div class="panel-body">
+        <div class="btn-group">
+            <% if can? :create, User %>
+                <%= link_to(new_admin_usuario_path, :class => 'btn btn-shadow btn-primary', :style => 'margin-bottom:10px;') do %>
+                    Adicionar <i class="fa fa-plus"></i>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="adv-table">
+            <%= render 'grid' %>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,23 @@
+<h2>Editar <%= resource_name.to_s.humanize %></h2>
+
+<% if params[:login_existente] %>
+	<div class="alert alert-warning fade in">
+		<button type="button" class="close close-sm" data-dismiss="alert">
+			<i class="fa fa-times"></i>
+		</button>
+		<strong>Login existente.</strong>
+	</div>
+<% end %>
+
+<div>
+  <section class="panel">
+    <header class="panel-heading">Atualizar usuário</header>
+    <div class="panel-body">
+      <div class="form">
+
+        <%= render 'form' %>
+
+      </div>
+    </div>
+  </section>
+</div>
