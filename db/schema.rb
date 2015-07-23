@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150512230055) do
+ActiveRecord::Schema.define(version: 20150723025635) do
 
   create_table "admin_categories", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -50,6 +50,24 @@ ActiveRecord::Schema.define(version: 20150512230055) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  create_table "admin_tickets", force: :cascade do |t|
+    t.string   "subject",            limit: 255
+    t.text     "content",            limit: 65535
+    t.integer  "user_id",            limit: 4
+    t.integer  "status",             limit: 4
+    t.integer  "priority",           limit: 4
+    t.date     "delivery_date"
+    t.integer  "admin_category_id",  limit: 4
+    t.integer  "admin_work_type_id", limit: 4
+    t.boolean  "planned",            limit: 1
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "admin_tickets", ["admin_category_id"], name: "index_admin_tickets_on_admin_category_id", using: :btree
+  add_index "admin_tickets", ["admin_work_type_id"], name: "index_admin_tickets_on_admin_work_type_id", using: :btree
+  add_index "admin_tickets", ["user_id"], name: "index_admin_tickets_on_user_id", using: :btree
 
   create_table "admin_work_types", force: :cascade do |t|
     t.string   "name",       limit: 255
