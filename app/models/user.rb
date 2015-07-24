@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :admin_tickets, :class_name => "Admin::Tickets"
+  has_many :admin_tickets, :class_name => "Admin::Ticket"
 
   include RoleModel
 
