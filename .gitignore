@@ -48,3 +48,5 @@ config/secrets.yml
 .settings/launch.json
 
 .settings/settings.json
+
+app/assets/javascripts/admin/jquery.jqplot.js
