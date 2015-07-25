@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :customers
     resources :employees
     resources :work_types
+    resources :tickets
 
     post 'usuarios/delete/:id' => 'usuarios#destroy'
     post 'grupos/delete/:id' => 'grupos#destroy'
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
     post 'customers/delete/:id' => 'customers#destroy'
     post 'employees/delete/:id' => 'employees#destroy'
     post 'work_types/delete/:id' => 'work_types#destroy'
+    post 'tickets/delete/:id' => 'tickets#destroy'
 
   end
 

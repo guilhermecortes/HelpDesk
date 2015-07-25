@@ -1,0 +1,66 @@
+<%# <td class="center hidden-phone">5</td> - classe para centralizar e esconder qdo responsivo %>
+
+<table  class="display table table-bordered table-striped" id="data_table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th class="hidden-phone">Usuário</th>
+        <th class="hidden-phone">Status</th>
+        <th class="hidden-phone">Prioridade</th>
+        <% if can? :update, Admin::Ticket %>
+            <th>Editar</th>
+        <% end %>
+        <% if can? :destroy, Admin::Ticket %>
+            <th>Excluir</th>
+        <% end %>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% @tickets.each do |ticket| %>
+        <tr>
+            <td><%= ticket.subject %></td>
+            <td class="hidden-phone"><%= ticket.user.nome %></td>
+            <td class="hidden-phone"><%= ticket.status %></td>
+            <td class="hidden-phone"><%= ticket.priority %></td>
+            <% if can? :update, Admin::Ticket %>
+                <td class="center">
+                    <%= link_to(edit_admin_ticket_path(ticket), :class => 'btn btn-primary btn-xs') do %>
+                        <i class="fa fa-pencil fa-lg"></i>
+                    <% end %>
+                </td>
+            <% end %>
+            <% if can? :destroy, Admin::Ticket %>
+                <td class="center">
+                    <%= link_to(admin_ticket_path(ticket), :class => 'btn btn-danger btn-xs btn-excluir-grid', :id => ticket.id) do %>
+                        <i class="fa fa-trash-o fa-lg"></i>
+                    <% end %>
+                </td>
+            <% end %>
+        </tr>
+    <% end %>
+
+    </tbody>
+
+</table>
+
+<span class="loader" style="left:50%;">
+    <%= image_tag "admin/loading.gif", :width => "80px" %>
+</span>
+<div style="position:fixed;" class="maskLoader"></div>
+
+<script type="text/javascript">
+    $(function (){
+        //datatable
+        $('#data_table').dataTable( {
+            "aaSorting": [[ 0, "asc" ]],
+            "oLanguage": {
+                "sUrl": "/datatable_pt.txt"
+            },
+            "aoColumnDefs": [
+                { "bSortable": true, "aTargets": [ 0 ] },
+                { "bSearchable": false, "aTargets": [ 4, 5 ] }
+            ]
+        } );
+    });
+</script>

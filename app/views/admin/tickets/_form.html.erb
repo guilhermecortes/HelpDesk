@@ -1,0 +1,144 @@
+<% content_for :style do -%>
+    <%= stylesheet_link_tag "admin/select2" %> <!-- dropdown -->
+    <%= stylesheet_link_tag 'admin/jquery-ui-1.10.4.custom' %>
+<% end -%>
+
+<% content_for :script do -%>
+    <%= javascript_include_tag "admin/select2" %> <!-- dropdown -->
+    <%= javascript_include_tag "admin/select2_locale_pt-BR" %> <!-- dropdown -->
+	<%= javascript_include_tag 'jquery.validate.min' %> <!-- validação formulário -->
+    <%= javascript_include_tag 'admin/jquery.maskedinput' %> <!-- máscara campos -->
+
+    <script>
+
+        $('.select2').select2();
+        $('input[name="admin_ticket[delivery_date]"]').mask("99/99/9999");
+        //Validação do formulário
+        $("form.formValidate").validate({
+            rules: {
+                'admin_ticket[subject]':
+                {
+                    required: true
+                }
+            },
+            messages: {
+                'admin_ticket[subject]': {
+                    required: "O título é obrigatório."
+                }
+            }
+        });
+    </script>
+
+<% end -%>
+
+<div class="panel-body">
+  <% if flash[:alert] %>
+      <div class="alert alert-warning fade in fadeOut">
+        <button class="close close-sm" type="button" data-dismiss="alert">
+          <i class="fa fa-times"></i>
+        </button>
+        <%= flash[:alert] %>
+      </div>
+  <% end %>
+
+    <%= simple_form_for(@ticket, html: {class: "form-horizontal formValidate"}) do |f| %>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Aberto por</label>
+	  		<div class="col-lg-4 iconic-input right"> <%= text_field_tag :user, current_user.nome, :class => 'form-control', :disabled => true -%>
+	  			<%= f.hidden_field :user_id, :value => current_user.id %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Título
+              <span class="text-danger">*</span>
+	  		</label>
+	  		<div class="col-lg-8 iconic-input right">
+	  			<%= f.text_field :subject, :required => true, :autofocus => true, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Descrição
+	  		</label>
+	  		<div class="col-lg-8 iconic-input right">
+	  			<%= f.text_area :content, :class => "form-control", rows: 8 %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Planejada?
+	  		</label>
+	  		<div class="col-lg-4 iconic-input right">
+	  			<%= f.check_box :planned, :class => "form-control" %>
+	  		</div>
+	  	</div>
+
+	  	<div class="form-group">
+	  		<label class="control-label col-lg-2">Data de entrega
+	  		</label>
+	  		<div class="col-lg-2 iconic-input right">
+              <% if controller.action_name == "edit" %>
+	  			<%= f.text_field :delivery_date, :class => "form-control", :value => @ticket.delivery_date.strftime("%d/%m/%Y") %>
+              <% else %>
+	  			<%= f.text_field :delivery_date, :class => "form-control" %>
+              <% end %>
+	  		</div>
+	  	</div>
+
+        <div class="form-group">
+            <label class="control-label col-lg-2">Categoria
+              <span class="text-danger">*</span>
+            </label>
+            <div class="col-lg-4 iconic-input right">
+              <%= f.select :admin_category_id, Admin::Category.all.collect {|c| [c.name, c.id]}, {include_blank: false}, :class => "select2", :style => "width:100%" %>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-lg-2">Tipo de Trabalho
+              <span class="text-danger">*</span>
+            </label>
+            <div class="col-lg-4 iconic-input right">
+              <%= f.select :admin_work_type_id, Admin::WorkType.all.collect {|w| [w.name, w.id]}, {include_blank: false}, :class => "select2", :style => "width:100%" %>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-lg-2">Status
+              <span class="text-danger">*</span>
+            </label>
+            <div class="col-lg-4 iconic-input right">
+              <%= f.select(:status, [['Admin', 1],
+                                     ['Funcionário', 2],
+                                     ['Cliente', 4]],
+                                    {}, { :class => 'select2', :style => 'width: 100%;' } )%>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-lg-2">Prioridade
+              <span class="text-danger">*</span>
+            </label>
+            <div class="col-lg-4 iconic-input right">
+              <%= f.select(:priority, [['Baixa', 1],
+                                     ['Normal', 2],
+                                     ['Alta', 3],
+                                     ['Urgente', 4]],
+                                    {}, { :class => 'select2', :style => 'width: 100%;' } )%>
+            </div>
+        </div>
+
+		<%= link_to 'Voltar', {:action => "index"}, :class => 'btn btn-shadow btn-default' %>
+		<div class="pull-right">
+			<%= f.submit "Salvar", class: "btn btn-shadow btn-primary" %>
+		</div>
+	<% end %>
+
+</div>
+
+ <span class="loader">
+ <%= image_tag "admin/loading.gif", :width => "80px" %>
+</span>
+<div style="position:fixed;" class="maskLoader"></div>
