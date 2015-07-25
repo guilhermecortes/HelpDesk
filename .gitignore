@@ -50,3 +50,13 @@ config/secrets.yml
 .settings/settings.json
 
 app/assets/javascripts/admin/jquery.jqplot.js
+app/assets/javascripts/admin/jquery.dataTables.js
+app/assets/javascripts/admin/select2.js
+app/assets/javascripts/admin/bootstrap-datetimepicker.js
+app/assets/javascripts/admin/excanvas.js
+app/assets/javascripts/admin/jquery.uploadfile.js
+app/assets/javascripts/admin/jquery.maskedinput.js
+app/assets/javascripts/admin/bootstrap-fileupload.js
+app/assets/javascripts/admin/respond.src.js
+app/assets/javascripts/admin/jquery.dcjqaccordion.2.7.js
+app/assets/javascripts/ckeditor/config.js
