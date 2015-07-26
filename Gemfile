@@ -60,3 +60,5 @@ group :development, :test do
   gem 'spring'
 end
 
+#análise de código
+gem "rubycritic", :require => false
