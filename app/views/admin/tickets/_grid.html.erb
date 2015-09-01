@@ -21,8 +21,32 @@
         <tr>
             <td><%= ticket.subject %></td>
             <td class="hidden-phone"><%= ticket.user.nome %></td>
-            <td class="hidden-phone"><%= ticket.status %></td>
-            <td class="hidden-phone"><%= ticket.priority %></td>
+            <td class="hidden-phone">
+              <%= if ticket.status == 1
+                      "Aberto"
+                  elsif ticket.status == 2
+                      "Em andamento"
+                  elsif ticket.status == 3
+                      "Aguardando cliente"
+                  elsif ticket.status == 4
+                      "Teste"
+                  elsif ticket.status == 5
+                      "Bloqueado"
+                  else
+                      "Fechado"
+                  end%>
+            </td>
+            <td class="hidden-phone">
+              <%= if ticket.priority == 1
+                    "Baixa"
+                 elsif ticket.priority == 2
+                    "Normal"
+                 elsif ticket.priority == 3
+                    "Alta"
+                 else
+                     "Urgente"
+                 end%>
+            </td>
             <% if can? :update, Admin::Ticket %>
                 <td class="center">
                     <%= link_to(edit_admin_ticket_path(ticket), :class => 'btn btn-primary btn-xs') do %>

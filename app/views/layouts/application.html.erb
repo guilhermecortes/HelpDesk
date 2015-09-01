@@ -44,88 +44,6 @@
       <!--  notification start -->
       <ul class="nav top-menu">
 
-        <!-- Notificação de mensagem início -->
-        <li id="header_inbox_bar" class="dropdown">
-          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-            <i class="fa fa-envelope-o"></i>
-            <span class="badge bg-important">2</span>
-          </a>
-          <ul class="dropdown-menu extended inbox">
-            <div class="notify-arrow notify-arrow-red"></div>
-            <li>
-              <p class="red">Você tem 2 novas mensagens</p>
-            </li>
-            <li>
-              <a href="#">
-                <span class="photo"><%= image_tag("avatar-mini.jpg") %></span>
-                                    <span class="subject">
-                                    <span class="from">Jonathan Smith</span>
-                                    <span class="time">Just now</span>
-                                    </span>
-                                    <span class="message">
-                                        Hello, this is an example msg.
-                                    </span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span class="photo"><%= image_tag("avatar-mini2.jpg") %></span>
-                                    <span class="subject">
-                                    <span class="from">Jhon Doe</span>
-                                    <span class="time">10 mins</span>
-                                    </span>
-                                    <span class="message">
-                                     Hi, Jhon Doe Bhai how are you ?
-                                    </span>
-              </a>
-            </li>
-
-            <li>
-              <a href="#">Ver todas as mensagens</a>
-            </li>
-          </ul>
-        </li>
-        <!-- Notificação de mensagem fim -->
-
-        <!-- Notificação de aleta início -->
-        <li id="header_notification_bar" class="dropdown">
-          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
-            <i class="fa fa-bell-o"></i>
-            <span class="badge bg-warning">7</span>
-          </a>
-          <ul class="dropdown-menu extended notification">
-            <div class="notify-arrow notify-arrow-yellow"></div>
-            <li>
-              <p class="yellow">Você tem 3 novas notificações</p>
-            </li>
-            <li>
-              <a href="#">
-                <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                Server #3 overloaded.
-                <span class="small italic">34 mins</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span class="label label-warning"><i class="fa fa-bell"></i></span>
-                Server #10 not respoding.
-                <span class="small italic">1 Hours</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                Database overloaded 24%.
-                <span class="small italic">4 hrs</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">Ver todas as notificações</a>
-            </li>
-          </ul>
-        </li>
-        <!-- Notificação de aleta fim -->
       </ul>
     </div>
 
@@ -138,7 +56,7 @@
         <li class="dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">
             <%= image_tag('admin/sem_imagem.jpg', size: "25x29") %>
-            <span class="username">Usuário</span>
+            <span class="username"><%= current_user.email -%></span>
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu extended logout">
@@ -171,31 +89,31 @@
                   </li>%>
         <li class="sub-menu">
           <%= link_to admin_usuarios_path do %>
-            <i class="fa fa-users"></i>
+            <i class="fa fa-user"></i>
             <span>Usuários</span>
           <%- end -%>
         </li>
         <li class="sub-menu">
           <%= link_to admin_grupos_path do %>
-              <i class="fa fa-user"></i>
+              <i class="fa fa-group"></i>
               <span>Grupos</span>
           <% end %>
         </li>
         <li class="sub-menu">
           <%= link_to admin_categories_path do %>
-            <i class="fa fa-bars"></i>
+            <i class="fa fa-sitemap"></i>
             <span>Categorias</span>
           <%- end -%>
         </li>
         <li class="sub-menu">
           <%= link_to admin_customers_path do %>
-            <i class="fa fa-bars"></i>
+            <i class="fa fa-money"></i>
             <span>Clientes</span>
           <%- end -%>
         </li>
         <li class="sub-menu">
           <%= link_to admin_employees_path do %>
-            <i class="fa fa-bars"></i>
+            <i class="fa fa-users"></i>
             <span>Funcionários</span>
           <%- end -%>
         </li>
@@ -203,6 +121,18 @@
           <%= link_to admin_work_types_path do %>
             <i class="fa fa-bars"></i>
             <span>Tipos de Trabalho</span>
+          <%- end -%>
+        </li>
+        <li class="sub-menu">
+          <%= link_to admin_tickets_path do %>
+            <i class="fa fa-ticket"></i>
+            <span>Tickets</span>
+          <%- end -%>
+        </li>
+        <li class="sub-menu">
+          <%= link_to admin_imports_path do %>
+            <i class="fa fa-upload"></i>
+            <span>Importação</span>
           <%- end -%>
         </li>
         <!--<li class="sub-menu">-->

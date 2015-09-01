@@ -110,9 +110,12 @@
               <span class="text-danger">*</span>
             </label>
             <div class="col-lg-4 iconic-input right">
-              <%= f.select(:status, [['Admin', 1],
-                                     ['Funcionário', 2],
-                                     ['Cliente', 4]],
+              <%= f.select(:status, [['Aberto', 1],
+                                     ['Em andamento', 2],
+                                     ['Aguardando cliente', 3],
+                                     ['Teste', 4],
+                                     ['Bloqueado', 5],
+                                     ['Fechado', 6]],
                                     {}, { :class => 'select2', :style => 'width: 100%;' } )%>
             </div>
         </div>

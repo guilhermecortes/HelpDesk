@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :employees
     resources :work_types
     resources :tickets
+    resources :imports, only: [:index]
 
     post 'usuarios/delete/:id' => 'usuarios#destroy'
     post 'grupos/delete/:id' => 'grupos#destroy'
