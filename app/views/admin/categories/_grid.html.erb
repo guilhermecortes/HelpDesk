@@ -4,7 +4,6 @@
     <thead>
     <tr>
         <th>Nome</th>
-        <th class="hidden-phone">Tickets Relacionados</th>
         <% if can? :update, Admin::Category %>
             <th>Editar</th>
         <% end %>
@@ -18,7 +17,6 @@
     <% @categories.each do |category| %>
         <tr>
             <td><%= category.name %></td>
-            <td class="hidden-phone"><%= "--" %></td>
             <% if can? :update, Admin::Category %>
                 <td class="center">
                     <%= link_to(edit_admin_category_path(category), :class => 'btn btn-primary btn-xs') do %>
@@ -55,7 +53,7 @@
             },
             "aoColumnDefs": [
                 { "bSortable": true, "aTargets": [ 0 ] },
-                { "bSearchable": false, "aTargets": [ 2, 3 ] }
+                { "bSearchable": false, "aTargets": [ 1,2 ] }
             ]
         } );
     });

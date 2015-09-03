@@ -7,6 +7,7 @@
         <th class="hidden-phone">Usuário</th>
         <th class="hidden-phone">Status</th>
         <th class="hidden-phone">Prioridade</th>
+        <th class="hidden-phone">Categoria</th>
         <% if can? :update, Admin::Ticket %>
             <th>Editar</th>
         <% end %>
@@ -46,6 +47,9 @@
                  else
                      "Urgente"
                  end%>
+            </td>
+            <td class="hidden-phone">
+              <%= ticket.admin_category.name -%>
             </td>
             <% if can? :update, Admin::Ticket %>
                 <td class="center">
