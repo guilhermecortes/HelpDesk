@@ -11,51 +11,20 @@ class Admin::WorkTypesController < ApplicationController
         @work_type = Admin::WorkType.new
     end
 
-
     def edit
     end
 
-
     def create
         @work_type = Admin::WorkType.new(work_type_params)
-
-        respond_to do |format|
-            if @work_type.save
-                flash[:info] = 'Tipo de trabalho criado com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { render action: 'index', status: :created, location: @work_type }
-            else
-                format.html { render action: 'new' }
-                format.json { render json: @work_type.errors, status: :unprocessable_entity}
-            end
-        end
-
+        respond_with @work_type, location: @work_type.save ? admin_work_types_path : new_admin_work_type_path(@work_type)
     end
 
     def update
-        respond_to do |format|
-            if @work_type.update(work_type_params)
-                flash[:info] = 'Tipo de trabalho atualizado com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { head :no_content }
-            else
-                format.html { render action: 'edit' }
-                format.json { render json: @work_type.errors, status: :unprocessable_entity }
-            end
-        end
+        respond_with @work_type, location: @work_type.update(work_type_params) ? admin_work_types_path : edit_admin_work_type_path(@work_type)
     end
 
     def destroy
-        respond_to do |format|
-            if @work_type.destroy
-                flash[:info] = 'Tipo de trabalho excluído com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { head :no_content }
-            else
-                format.html { render action: 'index' }
-                format.json { render json: @work_type.errors, status: :unprocessable_entity }
-            end
-        end
+        respond_with @work_type, location: admin_work_types_path if @work_type.destroy
     end
 
     private

@@ -80,7 +80,7 @@
 	  		</label>
 	  		<div class="col-lg-2 iconic-input right">
               <% if controller.action_name == "edit" %>
-	  			<%= f.text_field :delivery_date, :class => "form-control", :value => @ticket.delivery_date.strftime("%d/%m/%Y") %>
+	  			<%= f.text_field :delivery_date, :class => "form-control", :value => @ticket.delivery_date.try(:strftime, "%d/%m/%Y") %>
               <% else %>
 	  			<%= f.text_field :delivery_date, :class => "form-control" %>
               <% end %>

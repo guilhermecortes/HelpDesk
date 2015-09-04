@@ -11,54 +11,20 @@ class Admin::TicketsController < ApplicationController
         @ticket = Admin::Ticket.new
     end
 
-
     def edit
     end
 
-
     def create
         @ticket = Admin::Ticket.new(ticket_params)
-
-        respond_to do |format|
-            if @ticket.save
-                flash[:info] = 'Ticket criado com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { render action: 'index', status: :created, location: @ticket }
-            else
-                flash[:alert] = "Ocorreu um erro ao salvar. #{@ticket.errors.full_messages.to_sentence}"
-                format.html { redirect_to action: 'new' }
-                format.json { render json: @ticket.errors, status: :unprocessable_entity}
-            end
-        end
-
+        respond_with @ticket, location: @ticket.save ? admin_tickets_path : new_admin_ticket_path(@ticket)
     end
 
     def update
-        respond_to do |format|
-            if @ticket.update(ticket_params)
-                flash[:info] = 'Ticket atualizado com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { head :no_content }
-            else
-                flash[:alert] = "Ocorreu um erro ao salvar. #{@ticket.errors.full_messages.to_sentence}"
-                format.html { render action: 'edit' }
-                format.json { render json: @ticket.errors, status: :unprocessable_entity }
-            end
-        end
+        respond_with @ticket, location: @ticket.update(ticket_params) ? admin_tickets_path : edit_admin_ticket_path(@ticket)
     end
 
     def destroy
-        respond_to do |format|
-            if @ticket.destroy
-                flash[:info] = 'Ticket excluído com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { head :no_content }
-            else
-                flash[:alert] = "Ocorreu um erro ao salvar. #{@ticket.errors.full_messages.to_sentence}"
-                format.html { render action: 'index' }
-                format.json { render json: @ticket.errors, status: :unprocessable_entity }
-            end
-        end
+        respond_with @ticket, location: admin_tickets_path if @ticket.destroy
     end
 
     private

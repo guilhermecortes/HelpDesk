@@ -11,54 +11,20 @@ class Admin::EmployeesController < ApplicationController
         @employee = Admin::Employee.new
     end
 
-
     def edit
     end
 
-
     def create
         @employee = Admin::Employee.new(employee_params)
-
-        respond_to do |format|
-            if @employee.save
-                flash[:info] = 'Funcionário criado com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { render action: 'index', status: :created, location: @employee }
-            else
-                flash[:alert] = "Ocorreu um erro ao salvar. #{@employee.errors.full_messages.to_sentence}"
-                format.html { redirect_to action: 'new' }
-                format.json { render json: @employee.errors, status: :unprocessable_entity}
-            end
-        end
-
+        respond_with @employee, location: @employee.save ? admin_employees_path : new_admin_employee_path(@employee)
     end
 
     def update
-        respond_to do |format|
-            if @employee.update(employee_params)
-                flash[:info] = 'Funcionário atualizado com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { head :no_content }
-            else
-                flash[:alert] = "Ocorreu um erro ao salvar. #{@employee.errors.full_messages.to_sentence}"
-                format.html { render action: 'edit' }
-                format.json { render json: @employee.errors, status: :unprocessable_entity }
-            end
-        end
+        respond_with @employee, location: @employee.update(employee_params) ? admin_employees_path : edit_admin_employee_path(@employee)
     end
 
     def destroy
-        respond_to do |format|
-            if @employee.destroy
-                flash[:info] = 'Funcionário excluído com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { head :no_content }
-            else
-                flash[:alert] = "Ocorreu um erro ao salvar. #{@employee.errors.full_messages.to_sentence}"
-                format.html { render action: 'index' }
-                format.json { render json: @employee.errors, status: :unprocessable_entity }
-            end
-        end
+        respond_with @employee, location: admin_employees_path if @employee.destroy
     end
 
     private

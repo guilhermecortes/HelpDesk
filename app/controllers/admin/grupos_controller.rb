@@ -11,51 +11,20 @@ class Admin::GruposController < ApplicationController
     @grupo = Admin::Grupo.new
   end
 
-
   def edit
   end
 
-
   def create
     @grupo = Admin::Grupo.new(grupo_params)
-
-    respond_to do |format|
-      if @grupo.save
-        flash[:info] = 'Grupo criado com sucesso'
-        format.html { redirect_to action: 'index' }
-        format.json { render action: 'index', status: :created, location: @grupo }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @grupo.errors, status: :unprocessable_entity}
-      end
-    end
-
+    respond_with @grupo, location: @grupo.save ? admin_grupos_path : new_admin_grupo_path(@grupo)
   end
 
   def update
-    respond_to do |format|
-      if @grupo.update(grupo_params)
-        flash[:info] = 'Grupo atualizado com sucesso'
-        format.html { redirect_to action: 'index' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @grupo.errors, status: :unprocessable_entity }
-      end
-    end
+    respond_with @grupo, location: @grupo.update(grupo_params) ? admin_grupos_path : edit_admin_grupo_path(@grupo)
   end
 
   def destroy
-    respond_to do |format|
-      if @grupo.destroy
-        flash[:info] = 'Grupo excluído com sucesso'
-        format.html { redirect_to action: 'index' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'index' }
-        format.json { render json: @grupo.errors, status: :unprocessable_entity }
-      end
-    end
+    respond_with @grupo, location: admin_grupos_path if @grupo.destroy
   end
 
   private

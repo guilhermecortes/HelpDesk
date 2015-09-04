@@ -11,54 +11,20 @@ class Admin::CustomersController < ApplicationController
         @customer = Admin::Customer.new
     end
 
-
     def edit
     end
 
-
     def create
         @customer = Admin::Customer.new(customer_params)
-
-        respond_to do |format|
-            if @customer.save
-                flash[:info] = 'Cliente criado com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { render action: 'index', status: :created, location: @customer }
-            else
-                flash[:alert] = "Ocorreu um erro ao salvar. #{@customer.errors.full_messages.to_sentence}"
-                format.html { redirect_to action: 'new' }
-                format.json { render json: @customer.errors, status: :unprocessable_entity}
-            end
-        end
-
+        respond_with @customer, location: @customer.save ? admin_customers_path : new_admin_customer_path(@customer)
     end
 
     def update
-        respond_to do |format|
-            if @customer.update(customer_params)
-                flash[:info] = 'Cliente atualizado com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { head :no_content }
-            else
-                flash[:alert] = "Ocorreu um erro ao salvar. #{@customer.errors.full_messages.to_sentence}"
-                format.html { render action: 'edit' }
-                format.json { render json: @customer.errors, status: :unprocessable_entity }
-            end
-        end
+        respond_with @customer, location: @customer.update(customer_params) ? admin_customers_path : edit_admin_customer_path(@customer)
     end
 
     def destroy
-        respond_to do |format|
-            if @customer.destroy
-                flash[:info] = 'Cliente excluído com sucesso'
-                format.html { redirect_to action: 'index' }
-                format.json { head :no_content }
-            else
-                flash[:alert] = "Ocorreu um erro ao salvar. #{@customer.errors.full_messages.to_sentence}"
-                format.html { render action: 'index' }
-                format.json { render json: @customer.errors, status: :unprocessable_entity }
-            end
-        end
+        respond_with @customer, location: admin_customers_path if @customer.destroy
     end
 
     private

@@ -52,12 +52,12 @@
         Lista de Tickets
     </header>
 
-  <% if flash[:info] %>
+  <% if flash[:notice] %>
       <div class="alert alert-success fade in fadeOut">
         <button class="close close-sm" type="button" data-dismiss="alert">
           <i class="fa fa-times"></i>
         </button>
-        <%= flash[:info] %>
+        <%= flash[:notice] %>
       </div>
   <% end %>
 

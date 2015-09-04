@@ -43,6 +43,8 @@ gem 'will_paginate', '~> 3.0.5'
 #fazer upload de arquivos
 gem 'carrierwave', '~> 0.9'
 
+gem 'responders'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
