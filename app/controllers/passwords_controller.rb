@@ -27,13 +27,13 @@ class PasswordsController < Devise::PasswordsController
         self.resource = resource_class.reset_password_by_token(resource_params)
 
         if resource.errors.empty?
-            resource_update resource
+            set_flash_message_and_redirect resource
         else
             respond_with resource
         end
     end
 
-    def resource_update resource
+    def set_flash_message_and_redirect resource
         resource.unlock_access! if unlockable?(resource)
         flash_message = resource.active_for_authentication? ? :updated : :updated_not_active
         set_flash_message(:notice, flash_message) if is_navigational_format?
