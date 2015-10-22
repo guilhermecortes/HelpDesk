@@ -40,7 +40,7 @@ config/database.yml
 log/development.log
 log/production.log
 
-Gemfile.lock
+
 
 config/secrets.yml
 
