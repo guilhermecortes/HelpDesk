@@ -35,7 +35,7 @@ tmp
 _yardoc
 doc/
 
-config/database.yml
+
 *.log
 log/development.log
 log/production.log
